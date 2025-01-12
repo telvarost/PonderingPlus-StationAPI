@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "ponderingplus",
+  "version": "${version}",
+
+  "name": "PonderingPlus",
+  "description": "A mod inspired by a desire to sit and read books and a love for libraries.",
+  "authors": [
+    "Telvarost"
+  ],
+  "contact": {
+    "issues": "https://github.com/telvarost/PonderingPlus-StationAPI/issues",
+    "homepage": "https://github.com/telvarost/PonderingPlus-StationAPI/",
+    "sources": "https://github.com/telvarost/PonderingPlus-StationAPI/"
+  },
+
+  "license": "MIT",
+  "icon": "assets/ponderingplus/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "stationapi:event_bus": [
+      "com.github.telvarost.ponderingplus.events.init.BlockListener",
+      "com.github.telvarost.ponderingplus.events.init.EntityListener"
+    ],
+    "stationapi:event_bus_client": [
+    ],
+    "stationapi:event_bus_server": [
+    ],
+    "gcapi3": [
+      "com.github.telvarost.ponderingplus.Config"
+    ]
+  },
+  "mixins": [
+    "ponderingplus.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3",
+    "gcapi3": ">=3.0.1",
+    "stationapi": "*"
+  },
+
+  "recommends": {
+    "modmenu": "*"
+  }
+}
