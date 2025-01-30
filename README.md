@@ -7,7 +7,7 @@ A b1.7.3 mod using StationAPI and babric (beta fabric) that was inspired by a de
 
 * Added the ability to sit by right-clicking any normal block with a book
   * Optionally you can disable sitting on the book using the config provided by [GlassConfigAPI](https://modrinth.com/mod/glass-config-api)
-  * Use the sneak key to stand back up, or right click any normal block with a book again
+  * Use the sneak key to stand back up
   * If you log out and log back in while sitting you will fall into the block you sat on
     * To fix this, install either [AnnoyanceFix-StationAPI](https://modrinth.com/mod/annoyancefix-stationapi-edition) or [UniTweaksTelsAddons](https://modrinth.com/mod/unitweakstelsaddons-stationapi) and enable vehicle logout/login fixes
 * Added the ability to write a message into a bookshelf (this will convert it into a modded block type)
