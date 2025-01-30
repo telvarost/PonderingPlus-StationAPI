@@ -5,9 +5,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.RailBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.MinecartEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -17,18 +17,47 @@ public class BookEntity extends Entity {
 
     public BookEntity(World world) {
         super(world);
-        this.setBoundingBoxSpacing(0.6F, 0.05F);
-        this.standingEyeHeight = 0.0F;
+        this.setBoundingBoxSpacing(0.6F, 0.2F);
+        this.standingEyeHeight = 0.01F;
     }
 
     public BookEntity(World world, Double x, Double y, Double z) {
-        super(world);
+        this(world);
+        this.setPosition(x, y + (double)this.standingEyeHeight, z);
+        this.velocityX = 0.0;
+        this.velocityY = 0.0;
+        this.velocityZ = 0.0;
+        this.prevX = x;
+        this.prevY = y;
+        this.prevZ = z;
     }
 
     @Environment(EnvType.CLIENT)
     @Override
     public float getShadowRadius() {
         return 0.5F;
+    }
+
+    @Override
+    public Box getBoundingBox() {
+        return this.boundingBox;
+    }
+
+    @Override
+    protected boolean bypassesSteppingEffects() {
+        return false;
+    }
+
+    @Override
+    public double getPassengerRidingHeight() {
+        return (double)this.height * 0.0 + 0.1;
+    }
+
+    @Override
+    public void updatePassengerPosition() {
+        if (this.passenger != null) {
+            this.passenger.setPosition(this.x, this.y + this.getPassengerRidingHeight() + this.passenger.getStandingEyeHeight(), this.z);
+        }
     }
 
     @Override
@@ -87,7 +116,7 @@ public class BookEntity extends Entity {
             if (var16 != null && var16.size() > 0) {
                 for(int var51 = 0; var51 < var16.size(); ++var51) {
                     Entity var18 = (Entity)var16.get(var51);
-                    if (var18 != this.passenger && var18.isPushable() && var18 instanceof MinecartEntity) {
+                    if (var18 != this.passenger && var18.isPushable() && var18 instanceof BookEntity) {
                         var18.onCollision(this);
                     }
                 }
@@ -96,15 +125,15 @@ public class BookEntity extends Entity {
             if (this.passenger != null && this.passenger.dead) {
                 this.passenger = null;
             }
-        }
 
-        if (null == this.passenger) {
-            this.dropItem(Item.BOOK.id, 1, 0.0F);
-            world.remove(this);
-        } else if (this.passenger.isSneaking()) {
-            this.dropItem(Item.BOOK.id, 1, 0.0F);
-            this.passenger.setVehicle(null);
-            world.remove(this);
+            if (null == this.passenger) {
+                this.dropItem(Item.BOOK.id, 1, 0.0F);
+                world.remove(this);
+            } else if (this.passenger.isSneaking()) {
+                this.dropItem(Item.BOOK.id, 1, 0.0F);
+                this.passenger.setVehicle(null);
+                world.remove(this);
+            }
         }
     }
 
