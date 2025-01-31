@@ -10,7 +10,7 @@ public class BookRenderer extends EntityRenderer {
     public EntityModel model;
 
     public BookRenderer() {
-        this.shadowRadius = 0.5F;
+        this.shadowRadius = 0.45F;
         this.model = new BookModel(this);
     }
 

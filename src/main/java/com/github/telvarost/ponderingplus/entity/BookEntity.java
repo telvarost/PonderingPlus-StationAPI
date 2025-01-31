@@ -41,7 +41,7 @@ public class BookEntity extends Entity implements EntitySpawnDataProvider {
     @Environment(EnvType.CLIENT)
     @Override
     public float getShadowRadius() {
-        return 0.5F;
+        return 0.45F;
     }
 
     @Override

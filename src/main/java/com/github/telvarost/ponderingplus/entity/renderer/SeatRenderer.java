@@ -10,7 +10,7 @@ public class SeatRenderer extends EntityRenderer {
     public EntityModel model;
 
     public SeatRenderer() {
-        this.shadowRadius = 0.5F;
+        this.shadowRadius = 0.45F;
         this.model = new SeatModel(this);
     }
 

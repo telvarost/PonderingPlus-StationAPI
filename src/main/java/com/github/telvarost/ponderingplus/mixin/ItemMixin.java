@@ -46,7 +46,7 @@ public class ItemMixin {
                         if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
                             entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
                         } else {
-                            entity.setPositionAndAngles(player.x, player.y - 1.0, player.z, bookYaw, 0.0F);
+                            entity.setPositionAndAngles(player.x, player.y - 1.6, player.z, bookYaw, 0.0F);
                         }
                         world.spawnEntity(entity);
                         player.setVehicle(entity);
@@ -74,7 +74,7 @@ public class ItemMixin {
                         if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
                             entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
                         } else {
-                            entity.setPositionAndAngles(player.x, player.y - 1.0, player.z, bookYaw, 0.0F);
+                            entity.setPositionAndAngles(player.x, player.y - 1.6, player.z, bookYaw, 0.0F);
                         }
                         world.spawnEntity(entity);
                         player.setVehicle(entity);

@@ -40,7 +40,7 @@ public class SeatEntity extends Entity implements EntitySpawnDataProvider {
     @Environment(EnvType.CLIENT)
     @Override
     public float getShadowRadius() {
-        return 0.5F;
+        return 0.45F;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class SeatEntity extends Entity implements EntitySpawnDataProvider {
 
     @Override
     public double getPassengerRidingHeight() {
-        return (double)this.height * 0.0 + 0.1;
+        return (double)this.height * 0.0 - 0.05;
     }
 
     @Override
