@@ -4,6 +4,8 @@ import com.github.telvarost.ponderingplus.Config;
 import com.github.telvarost.ponderingplus.entity.BookEntity;
 import com.github.telvarost.ponderingplus.entity.SeatEntity;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,15 +30,24 @@ public class ItemMixin {
             if (Config.config.useBookAsSeat) {
                 if (null != player.vehicle && player.vehicle instanceof BookEntity) {
 //                    if (!player.world.isRemote) {
-//                        player.setVehicle(null);
+//                        if (null != player.vehicle) {
+//                            if (player.vehicle.onGround) {
+//                                player.vehicle.setPosition(player.vehicle.x, player.vehicle.y + 1.0, player.vehicle.z);
+//                            }
+//                            player.setVehicle(null);
+//                        }
 //                    }
+//                    cir.setReturnValue(true);
                 } else {
                     if (!world.isRemote) {
                         BookEntity entity = new BookEntity(world);
                         float bookYaw = (player.yaw - 90.0F);
                         bookYaw = (0.0F > bookYaw) ? (bookYaw + 360.0F) : bookYaw;
-                        entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
-                        //entity.setPositionAndAngles((double)((float)x + 0.5F), (double)((float)y + 1.5F), (double)((float)z + 0.5F), bookYaw, 0.0F);
+                        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
+                            entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
+                        } else {
+                            entity.setPositionAndAngles(player.x, player.y - 1.0, player.z, bookYaw, 0.0F);
+                        }
                         world.spawnEntity(entity);
                         player.setVehicle(entity);
                     }
@@ -47,15 +58,24 @@ public class ItemMixin {
             } else {
                 if (null != player.vehicle && player.vehicle instanceof SeatEntity) {
 //                    if (!player.world.isRemote) {
-//                        player.setVehicle(null);
+//                        if (null != player.vehicle) {
+//                            if (player.vehicle.onGround) {
+//                                player.vehicle.setPosition(player.vehicle.x, player.vehicle.y + 1.0, player.vehicle.z);
+//                            }
+//                            player.setVehicle(null);
+//                        }
 //                    }
+//                    cir.setReturnValue(true);
                 } else {
                     if (!world.isRemote) {
                         SeatEntity entity = new SeatEntity(world);
                         float bookYaw = (player.yaw - 90.0F);
                         bookYaw = (0.0F > bookYaw) ? (bookYaw + 360.0F) : bookYaw;
-                        entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
-                        //entity.setPositionAndAngles((double)((float)x + 0.5F), (double)((float)y + 1.5F), (double)((float)z + 0.5F), bookYaw, 0.0F);
+                        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
+                            entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
+                        } else {
+                            entity.setPositionAndAngles(player.x, player.y - 1.0, player.z, bookYaw, 0.0F);
+                        }
                         world.spawnEntity(entity);
                         player.setVehicle(entity);
                     }

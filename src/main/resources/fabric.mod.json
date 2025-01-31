@@ -24,6 +24,7 @@
       "com.github.telvarost.ponderingplus.events.init.EntityListener"
     ],
     "stationapi:event_bus_client": [
+      "com.github.telvarost.ponderingplus.events.init.EntityRendererListener"
     ],
     "stationapi:event_bus_server": [
     ],

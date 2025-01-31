@@ -1,5 +1,6 @@
 package com.github.telvarost.ponderingplus.entity;
 
+import com.github.telvarost.ponderingplus.events.init.EntityListener;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.RailBlock;
@@ -10,10 +11,15 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.server.entity.EntitySpawnDataProvider;
+import net.modificationstation.stationapi.api.server.entity.HasTrackingParameters;
+import net.modificationstation.stationapi.api.util.Identifier;
+import net.modificationstation.stationapi.api.util.TriState;
 
 import java.util.List;
 
-public class BookEntity extends Entity {
+@HasTrackingParameters(updatePeriod = 4, sendVelocity = TriState.TRUE, trackingDistance = 30)
+public class BookEntity extends Entity implements EntitySpawnDataProvider {
 
     public BookEntity(World world) {
         super(world);
@@ -23,7 +29,7 @@ public class BookEntity extends Entity {
 
     public BookEntity(World world, Double x, Double y, Double z) {
         this(world);
-        this.setPosition(x, y + (double)this.standingEyeHeight, z);
+        this.setPosition(x, y, z);
         this.velocityX = 0.0;
         this.velocityY = 0.0;
         this.velocityZ = 0.0;
@@ -130,6 +136,9 @@ public class BookEntity extends Entity {
                 this.dropItem(Item.BOOK.id, 1, 0.0F);
                 world.remove(this);
             } else if (this.passenger.isSneaking()) {
+                if (this.onGround) {
+                    this.setPosition(this.x, this.y + 1.0, this.z);
+                }
                 this.dropItem(Item.BOOK.id, 1, 0.0F);
                 this.passenger.setVehicle(null);
                 world.remove(this);
@@ -163,5 +172,10 @@ public class BookEntity extends Entity {
     @Override
     protected void writeNbt(NbtCompound nbt) {
 
+    }
+
+    @Override
+    public Identifier getHandlerIdentifier() {
+        return EntityListener.NAMESPACE.id("book");
     }
 }

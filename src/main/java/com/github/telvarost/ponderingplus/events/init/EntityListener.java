@@ -2,13 +2,17 @@ package com.github.telvarost.ponderingplus.events.init;
 
 import com.github.telvarost.ponderingplus.entity.BookEntity;
 import com.github.telvarost.ponderingplus.entity.SeatEntity;
-import com.github.telvarost.ponderingplus.entity.renderer.BookRenderer;
-import com.github.telvarost.ponderingplus.entity.renderer.SeatRenderer;
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.modificationstation.stationapi.api.client.event.render.entity.EntityRendererRegisterEvent;
 import net.modificationstation.stationapi.api.event.entity.EntityRegister;
+import net.modificationstation.stationapi.api.event.registry.EntityHandlerRegistryEvent;
+import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
+import net.modificationstation.stationapi.api.registry.Registry;
+import net.modificationstation.stationapi.api.util.Namespace;
+import net.modificationstation.stationapi.api.util.Null;
 
 public class EntityListener {
+    @Entrypoint.Namespace
+    public static final Namespace NAMESPACE = Null.get();
 
     @EventListener
     public void registerEntities(EntityRegister event){
@@ -17,8 +21,8 @@ public class EntityListener {
     }
 
     @EventListener
-    public void registerEntityRenderer(EntityRendererRegisterEvent event){
-        event.renderers.put(BookEntity.class, new BookRenderer());
-        event.renderers.put(SeatEntity.class, new SeatRenderer());
+    public void registerEntityHandlers(EntityHandlerRegistryEvent event) {
+        Registry.register(event.registry, NAMESPACE.id("book"), BookEntity::new);
+        Registry.register(event.registry, NAMESPACE.id("seat"), SeatEntity::new);
     }
 }
