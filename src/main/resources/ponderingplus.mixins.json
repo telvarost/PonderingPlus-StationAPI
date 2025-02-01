@@ -10,6 +10,7 @@
   "server": [
   ],
   "client": [
+    "client.ClientNetworkHandlerMixin",
     "client.SignBlockEntityRendererMixin",
     "client.SignEditScreenMixin"
   ],

@@ -23,7 +23,7 @@ public class BookEntity extends Entity implements EntitySpawnDataProvider {
 
     public BookEntity(World world) {
         super(world);
-        this.setBoundingBoxSpacing(0.6F, 0.2F);
+        this.setBoundingBoxSpacing(0.6F, 0.6F);
         this.standingEyeHeight = 0.01F;
     }
 
