@@ -1,6 +1,6 @@
 package com.github.telvarost.ponderingplus.entity;
 
-import com.github.telvarost.ponderingplus.events.init.EntityListener;
+import com.github.telvarost.ponderingplus.ModHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.RailBlock;
@@ -171,6 +171,6 @@ public class SeatEntity extends Entity implements EntitySpawnDataProvider {
 
     @Override
     public Identifier getHandlerIdentifier() {
-        return EntityListener.NAMESPACE.id("seat");
+        return ModHelper.NAMESPACE.id("seat");
     }
 }
