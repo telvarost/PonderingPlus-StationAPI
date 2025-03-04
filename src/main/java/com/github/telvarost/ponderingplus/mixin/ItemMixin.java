@@ -1,17 +1,23 @@
 package com.github.telvarost.ponderingplus.mixin;
 
 import com.github.telvarost.ponderingplus.Config;
+import com.github.telvarost.ponderingplus.block.StoryBookshelf;
+import com.github.telvarost.ponderingplus.blockentity.StoryBookshelfBlockEntity;
 import com.github.telvarost.ponderingplus.entity.BookEntity;
 import com.github.telvarost.ponderingplus.entity.SeatEntity;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
+import com.github.telvarost.ponderingplus.gui.screen.StoryBookshelfScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.SignBlockEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.modificationstation.stationapi.api.client.gui.screen.GuiHandler;
+import net.modificationstation.stationapi.api.gui.screen.container.GuiHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -97,6 +103,42 @@ public class ItemMixin {
                         signBlockEntity = new SignBlockEntity();
                         world.setBlockEntity(x, y, z, signBlockEntity);
                         player.openEditSignScreen(signBlockEntity);
+                    }
+
+                    cir.setReturnValue(true);
+                }
+            }
+        } else if (Item.PAPER.id == itemStack.itemId) {
+            if (Block.BOOKSHELF.id == world.getBlockId(x, y, z)) {
+                if (player.inventory.remove(Item.DYE.id)) {
+                    world.playSound(player, "step.wood", 1.0F, 1.0F / (world.random.nextFloat() * 0.4F + 0.8F));
+                    world.setBlock(x, y, z, BlockListener.STORY_BOOKSHELF.id);
+
+                    /** - Open sign screen */
+//                    SignBlockEntity signBlockEntity = (SignBlockEntity)world.getBlockEntity(x, y, z);
+//                    if (signBlockEntity != null) {
+//                        player.openEditSignScreen(signBlockEntity);
+//                    } else {
+//                        signBlockEntity = new SignBlockEntity();
+//                        world.setBlockEntity(x, y, z, signBlockEntity);
+//                        player.openEditSignScreen(signBlockEntity);
+//                    }
+
+                    StoryBookshelfBlockEntity storyBookshelfBlockEntity = (StoryBookshelfBlockEntity) world.getBlockEntity(x, y, z);
+                    if (storyBookshelfBlockEntity != null) {
+                        //GuiHelper.openGUI(player, StoryBookshelf.GUI_ID, null, new StoryBookshelfScreen(storyBookshelfBlockEntity));
+                        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
+                            Minecraft minecraft = (Minecraft) FabricLoader.getInstance().getGameInstance();
+                            minecraft.setScreen(new StoryBookshelfScreen(storyBookshelfBlockEntity));
+                        }
+                    } else {
+                        storyBookshelfBlockEntity = new StoryBookshelfBlockEntity();
+                        world.setBlockEntity(x, y, z, storyBookshelfBlockEntity);
+                        //GuiHelper.openGUI(player, StoryBookshelf.GUI_ID, null, new StoryBookshelfScreen(storyBookshelfBlockEntity));
+                        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
+                            Minecraft minecraft = (Minecraft) FabricLoader.getInstance().getGameInstance();
+                            minecraft.setScreen(new StoryBookshelfScreen(storyBookshelfBlockEntity));
+                        }
                     }
 
                     cir.setReturnValue(true);
