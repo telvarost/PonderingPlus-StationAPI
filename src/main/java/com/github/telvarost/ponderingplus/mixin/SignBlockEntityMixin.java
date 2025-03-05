@@ -48,7 +48,7 @@ public class SignBlockEntityMixin extends BlockEntity {
             cancellable = true
     )
     public void ponderingPlus_readNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
+        //if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
             this.editable = true;
 
             for (int var2 = 4; var2 < 8; ++var2) {
@@ -57,7 +57,7 @@ public class SignBlockEntityMixin extends BlockEntity {
                     this.texts[var2] = this.texts[var2].substring(0, 15);
                 }
             }
-        }
+        //}
     }
 
     @Environment(EnvType.SERVER)

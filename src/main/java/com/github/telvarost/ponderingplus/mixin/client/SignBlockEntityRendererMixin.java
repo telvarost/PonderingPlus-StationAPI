@@ -6,12 +6,14 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.SignBlockEntity;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
@@ -58,6 +60,23 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
             original.call(instance, "/assets/ponderingplus/icon.png");
         } else {
             original.call(instance, path);
+        }
+    }
+
+    @WrapOperation(
+            method = "render(Lnet/minecraft/block/entity/SignBlockEntity;DDDF)V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/font/TextRenderer;draw(Ljava/lang/String;III)V"
+            )
+    )
+    public void renderBackground(TextRenderer instance, String text, int x, int y, int color, Operation<Void> original) {
+        if (swapTexture) {
+            original.call(instance, text, x, y + 20, color);
+        } else if (swapStoryTexture) {
+            original.call(instance, text, x, y, color);
+        } else {
+            original.call(instance, text, x, y + 20, color);
         }
     }
 }
