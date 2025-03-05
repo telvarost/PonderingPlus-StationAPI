@@ -28,6 +28,7 @@ public class ClientNetworkHandlerMixin {
     )
     public void handleUpdateSign(UpdateSignPacket packet, CallbackInfo ci) {
         if (null == this.minecraft.world) {
+            // TODO: create a queue and process update package messages on first open of edit sign screen
             ci.cancel();
         } else {
             if (this.minecraft.world.isPosLoaded(packet.x, packet.y, packet.z)) {
