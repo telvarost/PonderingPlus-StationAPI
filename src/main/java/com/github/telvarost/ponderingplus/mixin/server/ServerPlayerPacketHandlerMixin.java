@@ -41,6 +41,7 @@ public abstract class ServerPlayerPacketHandlerMixin extends NetworkHandler impl
                 BlockEntity var3 = serverWorld.getBlockEntity(packet.x, packet.y, packet.z);
                 if (var3 instanceof SignBlockEntity) {
                     SignBlockEntity var4 = (SignBlockEntity)var3;
+                    // TODO: fix is editable property for bookshelf messages
                     if (!var4.isEditable()) {
                         this.server.warn("Player " + this.player.name + " just tried to change non-editable sign");
                         return;
