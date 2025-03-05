@@ -9,7 +9,7 @@ import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.SignBlockEntityRenderer;
-import net.minecraft.client.render.block.entity.SignModel;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,6 +42,7 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
         } else if (signBlockEntity.getBlock().id == BlockListener.STORY_BOOKSHELF.id && d == -0.5D && e == -0.75D && f == -0.5D && g == 0.0F) {
             swapStoryTexture = true;
         } else {
+            swapStoryTexture = false;
             swapTexture = false;
         }
     }
@@ -55,6 +56,7 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
     )
     public void ponderingPlus_bindTexture(SignBlockEntityRenderer instance, String path, Operation<Void> original) {
         if (swapTexture) {
+            GL11.glTranslatef(0.0F, 0.15625F, 0.0F);
             original.call(instance, "/assets/ponderingplus/notebook.png");
         } else if (swapStoryTexture) {
             original.call(instance, "/assets/ponderingplus/empty.png");
@@ -72,9 +74,9 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
     )
     public void ponderingPlus_draw(TextRenderer instance, String text, int x, int y, int color, Operation<Void> original) {
         if (swapTexture) {
-            original.call(instance, text, x, y + 30, color);
+            original.call(instance, text, x, y + 31, color);
         } else if (swapStoryTexture) {
-            original.call(instance, text, x, y - 15, color);
+            original.call(instance, text, x, y - 17, color);
         } else {
             original.call(instance, text, x, y + 30, color);
         }

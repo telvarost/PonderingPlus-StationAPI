@@ -101,7 +101,7 @@ public class SignEditScreenMixin extends Screen {
         if (sign.getBlock().id == BlockListener.STORY_BOOKSHELF.id) {
             GL11.glBindTexture(3553 /* GL_TEXTURE_2D */, minecraft.textureManager.getTextureId("/assets/ponderingplus/storybook.png"));
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            drawTexture((this.width - 102) / 2, 40, 0, 0, 102, 126);
+            drawTexture((this.width - 104) / 2, 40, 0, 0, 104, 128);
         } else {
             original.call(instance,textRenderer, text, centerX, y, color);
         }
