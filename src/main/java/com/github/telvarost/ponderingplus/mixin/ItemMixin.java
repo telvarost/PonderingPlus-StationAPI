@@ -118,6 +118,7 @@ public class ItemMixin {
                         player.openEditSignScreen(signBlockEntity);
                     }
 
+                    itemStack.count--;
                     cir.setReturnValue(true);
                 }
             }
