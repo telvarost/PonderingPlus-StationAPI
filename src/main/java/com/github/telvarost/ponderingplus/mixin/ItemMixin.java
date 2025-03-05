@@ -102,6 +102,25 @@ public class ItemMixin {
                     cir.setReturnValue(true);
                 }
             }
+        } else if (Item.PAPER.id == itemStack.itemId) {
+            if (Block.BOOKSHELF.id == world.getBlockId(x, y, z)) {
+                if (player.inventory.remove(Item.DYE.id)) {
+                    world.playSound(player, "step.wood", 1.0F, 1.0F / (world.random.nextFloat() * 0.4F + 0.8F));
+                    world.setBlock(x, y, z, BlockListener.STORY_BOOKSHELF.id);
+
+                    /** - Open sign screen */
+                    SignBlockEntity signBlockEntity = (SignBlockEntity)world.getBlockEntity(x, y, z);
+                    if (signBlockEntity != null) {
+                        player.openEditSignScreen(signBlockEntity);
+                    } else {
+                        signBlockEntity = new SignBlockEntity();
+                        world.setBlockEntity(x, y, z, signBlockEntity);
+                        player.openEditSignScreen(signBlockEntity);
+                    }
+
+                    cir.setReturnValue(true);
+                }
+            }
         }
     }
 }

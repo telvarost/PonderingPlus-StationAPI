@@ -14,14 +14,17 @@ public class BlockListener {
 
     public static Block[] blocks;
     public static Block NOTES_BOOKSHELF;
+    public static Block STORY_BOOKSHELF;
 
     @EventListener
     public void registerBlocks(BlockRegistryEvent event) {
 
         NOTES_BOOKSHELF = new NotesBookshelf(Identifier.of(ModHelper.NAMESPACE, "notes_bookshelf"), Material.WOOD).setSoundGroup(WOOD_SOUND_GROUP).setHardness(2.0F).setTranslationKey(ModHelper.NAMESPACE, "notes_bookshelf");
+        STORY_BOOKSHELF = new NotesBookshelf(Identifier.of(ModHelper.NAMESPACE, "story_bookshelf"), Material.WOOD).setSoundGroup(WOOD_SOUND_GROUP).setHardness(3.0F).setTranslationKey(ModHelper.NAMESPACE, "story_bookshelf");
 
         blocks = new Block[]
         {   NOTES_BOOKSHELF
+        ,   STORY_BOOKSHELF
         };
     }
 }

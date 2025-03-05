@@ -20,6 +20,9 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
     @Unique
     private boolean swapTexture = false;
 
+    @Unique
+    private boolean swapStoryTexture = false;
+
     @Inject(
             method = "render(Lnet/minecraft/block/entity/SignBlockEntity;DDDF)V",
             at = @At("HEAD"),
@@ -29,8 +32,13 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
         if (signBlockEntity.getBlock().id == BlockListener.NOTES_BOOKSHELF.id && d != -0.5D && e != -0.75D && f != -0.5D && g != 0.0F) {
             swapTexture = false;
             ci.cancel();
+        } else if (signBlockEntity.getBlock().id == BlockListener.STORY_BOOKSHELF.id && d != -0.5D && e != -0.75D && f != -0.5D && g != 0.0F) {
+            swapStoryTexture = false;
+            ci.cancel();
         } else if (signBlockEntity.getBlock().id == BlockListener.NOTES_BOOKSHELF.id && d == -0.5D && e == -0.75D && f == -0.5D && g == 0.0F) {
             swapTexture = true;
+        } else if (signBlockEntity.getBlock().id == BlockListener.STORY_BOOKSHELF.id && d == -0.5D && e == -0.75D && f == -0.5D && g == 0.0F) {
+            swapStoryTexture = true;
         } else {
             swapTexture = false;
         }
@@ -46,6 +54,8 @@ public abstract class SignBlockEntityRendererMixin extends BlockEntityRenderer {
     public void renderBackground(SignBlockEntityRenderer instance, String path, Operation<Void> original) {
         if (swapTexture) {
             original.call(instance, "/assets/ponderingplus/notebook.png");
+        } else if (swapStoryTexture) {
+            original.call(instance, "/assets/ponderingplus/icon.png");
         } else {
             original.call(instance, path);
         }
