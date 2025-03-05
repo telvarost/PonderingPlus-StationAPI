@@ -10,6 +10,8 @@ public class ModHelper {
     @Entrypoint.Namespace
     public static Namespace NAMESPACE = Null.get();
 
+    public static final int STORY_BOOK_SIZE = 10;
+
     public static class ModHelperFields {
     }
 }
