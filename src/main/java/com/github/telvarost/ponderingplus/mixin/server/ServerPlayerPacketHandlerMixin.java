@@ -1,5 +1,6 @@
 package com.github.telvarost.ponderingplus.mixin.server;
 
+import com.github.telvarost.ponderingplus.ModHelper;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -48,7 +49,7 @@ public abstract class ServerPlayerPacketHandlerMixin extends NetworkHandler impl
 
                 int var6;
                 int var9;
-                for(var9 = 0; var9 < 8; ++var9) {
+                for(var9 = 0; var9 < ModHelper.STORY_BOOK_SIZE; ++var9) {
                     boolean var5 = true;
                     if (packet.text[var9].length() > 15) {
                         var5 = false;
@@ -71,8 +72,8 @@ public abstract class ServerPlayerPacketHandlerMixin extends NetworkHandler impl
                     var6 = packet.z;
                     SignBlockEntity var7 = (SignBlockEntity)var3;
 
-                    for(int var8 = 0; var8 < 8; ++var8) {
-                        var7.texts[var8] = packet.text[var8];
+                    for(int textIndex = 0; textIndex < ModHelper.STORY_BOOK_SIZE; ++textIndex) {
+                        var7.texts[textIndex] = packet.text[textIndex];
                     }
 
                     var7.setEditable(false);

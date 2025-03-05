@@ -41,9 +41,9 @@ public class UpdateStoryPacket extends UpdateSignPacket implements ManagedPacket
             this.x = stream.readInt();
 			this.y = stream.readShort();
 			this.z = stream.readInt();
-			this.text = new String[8];
+			this.text = new String[ModHelper.STORY_BOOK_SIZE];
 
-			for(int var2 = 0; var2 < 8; ++var2) {
+			for(int var2 = 0; var2 < ModHelper.STORY_BOOK_SIZE; ++var2) {
 				this.text[var2] = readString(stream, 15);
 			}
         } catch (IOException e) {
@@ -58,7 +58,7 @@ public class UpdateStoryPacket extends UpdateSignPacket implements ManagedPacket
 			stream.writeShort(this.y);
 			stream.writeInt(this.z);
 
-			for(int var2 = 0; var2 < 8; ++var2) {
+			for(int var2 = 0; var2 < ModHelper.STORY_BOOK_SIZE; ++var2) {
 				writeString(this.text[var2], stream);
 			}
         } catch (IOException e) {
@@ -75,7 +75,7 @@ public class UpdateStoryPacket extends UpdateSignPacket implements ManagedPacket
 	public int size() {
 		int var1 = 0;
 
-		for(int var2 = 0; var2 < 8; ++var2) {
+		for(int var2 = 0; var2 < ModHelper.STORY_BOOK_SIZE; ++var2) {
 			var1 += this.text[var2].length();
 		}
 

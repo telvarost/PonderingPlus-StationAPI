@@ -1,13 +1,18 @@
 package com.github.telvarost.ponderingplus.mixin.client;
 
+import com.github.telvarost.ponderingplus.ModHelper;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
 import com.github.telvarost.ponderingplus.packet.UpdateStoryPacket;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.SignBlockEntity;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.SignEditScreen;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -63,11 +68,11 @@ public class SignEditScreenMixin extends Screen {
     protected void ponderingPlus_keyPressed(char character, int keyCode, CallbackInfo ci) {
         if (sign.getBlock().id == BlockListener.STORY_BOOKSHELF.id) {
             if (keyCode == 200) {
-                this.currentRow = (this.currentRow - 1) % 8;
+                this.currentRow = (this.currentRow - 1) % ModHelper.STORY_BOOK_SIZE;
             }
 
             if (keyCode == 208 || keyCode == 28) {
-                this.currentRow = (this.currentRow + 1) % 8;
+                this.currentRow = (this.currentRow + 1) % ModHelper.STORY_BOOK_SIZE;
             }
 
             if (keyCode == 14 && this.sign.texts[this.currentRow].length() > 0) {
@@ -82,6 +87,23 @@ public class SignEditScreenMixin extends Screen {
             }
 
             ci.cancel();
+        }
+    }
+
+    @WrapOperation(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/gui/screen/ingame/SignEditScreen;drawCenteredTextWithShadow(Lnet/minecraft/client/font/TextRenderer;Ljava/lang/String;III)V"
+            )
+    )
+    protected void ponderingPlus_renderBook(SignEditScreen instance, TextRenderer textRenderer, String text, int centerX, int y, int color, Operation<Void> original) {
+        if (sign.getBlock().id == BlockListener.STORY_BOOKSHELF.id) {
+            GL11.glBindTexture(3553 /* GL_TEXTURE_2D */, minecraft.textureManager.getTextureId("/assets/ponderingplus/storybook.png"));
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            drawTexture((this.width - 102) / 2, 40, 0, 0, 102, 126);
+        } else {
+            original.call(instance,textRenderer, text, centerX, y, color);
         }
     }
 }

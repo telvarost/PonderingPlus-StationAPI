@@ -1,5 +1,6 @@
 package com.github.telvarost.ponderingplus.mixin;
 
+import com.github.telvarost.ponderingplus.ModHelper;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
 import com.github.telvarost.ponderingplus.packet.UpdateStoryPacket;
 import net.fabricmc.api.EnvType;
@@ -25,7 +26,7 @@ public class SignBlockEntityMixin extends BlockEntity {
             at = @At("RETURN")
     )
     public void ponderingPlus_init(CallbackInfo ci) {
-        this.texts = new String[]{"", "", "", "", "", "", "", ""};
+        this.texts = new String[]{"", "", "", "", "", "", "", "", "", ""};
     }
 
     @Inject(
@@ -39,6 +40,8 @@ public class SignBlockEntityMixin extends BlockEntity {
             nbt.putString("Text6", this.texts[5]);
             nbt.putString("Text7", this.texts[6]);
             nbt.putString("Text8", this.texts[7]);
+            nbt.putString("Text9", this.texts[8]);
+            nbt.putString("Text10", this.texts[9]);
         }
     }
 
@@ -51,7 +54,7 @@ public class SignBlockEntityMixin extends BlockEntity {
         //if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
             this.editable = true;
 
-            for (int var2 = 4; var2 < 8; ++var2) {
+            for (int var2 = 4; var2 < ModHelper.STORY_BOOK_SIZE; ++var2) {
                 this.texts[var2] = nbt.getString("Text" + (var2 + 1));
                 if (this.texts[var2].length() > 15) {
                     this.texts[var2] = this.texts[var2].substring(0, 15);
@@ -68,9 +71,9 @@ public class SignBlockEntityMixin extends BlockEntity {
     )
     public void ponderingPlus_createUpdatePacket(CallbackInfoReturnable<Packet> cir) {
         if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
-            String[] var1 = new String[8];
+            String[] var1 = new String[ModHelper.STORY_BOOK_SIZE];
 
-            for (int var2 = 0; var2 < 8; ++var2) {
+            for (int var2 = 0; var2 < ModHelper.STORY_BOOK_SIZE; ++var2) {
                 var1[var2] = this.texts[var2];
             }
 
