@@ -10,12 +10,14 @@ A b1.7.3 mod using StationAPI and babric (beta fabric) that was inspired by a de
   * Use the sneak key to stand back up
   * If you log out and log back in while sitting you will fall into the block you sat on
     * To fix this, install either [AnnoyanceFix-StationAPI](https://modrinth.com/mod/annoyancefix-stationapi-edition) or [UniTweaksTelsAddons](https://modrinth.com/mod/unitweakstelsaddons-stationapi) and enable vehicle logout/login fixes
-* Added the ability to write a message into a bookshelf (this will convert it into a modded block type)
-  * Right-click a bookshelf with a feather in hand and black dye (ink sacs) in your inventory
+* Added the ability to write messages into bookshelves (this will convert them into a modded block type)
+  * `right-click` a bookshelf with a feather in hand and black dye (ink sacs) in your inventory
     * One black dye (ink sac) will be consumed and the block will convert into an editable bookshelf
+    * Alternatively `right-click` with a piece of paper in hand and black dye in your inventory to make a longer message
   * Editable bookshelves do not catch on fire, take slightly longer to break, and show a message when right-clicked
     * Editable bookshelves drop regular bookshelves when broken and the written data is lost
     * Their texture is also reversed to distinguish them from normal bookshelves (they will still use the bookshelf texture from terrain.png)
+      * Longer message bookshelves also have a different top/bottom texture (they use the side bookshelf texture from terrain.png)
     * The particles are also ever so slightly different as they pull from the side texture rather than top texture
   * Once a bookshelf has become editable, you can edit it any number of times without consuming further items
     * Right-click the bookshelf (item in hand does not matter) to read/edit the bookshelf message
