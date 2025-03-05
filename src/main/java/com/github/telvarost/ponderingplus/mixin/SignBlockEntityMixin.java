@@ -35,14 +35,14 @@ public class SignBlockEntityMixin extends BlockEntity {
             cancellable = true
     )
     public void ponderingPlus_writeNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
+        //if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
             nbt.putString("Text5", this.texts[4]);
             nbt.putString("Text6", this.texts[5]);
             nbt.putString("Text7", this.texts[6]);
             nbt.putString("Text8", this.texts[7]);
             nbt.putString("Text9", this.texts[8]);
             nbt.putString("Text10", this.texts[9]);
-        }
+        //}
     }
 
     @Inject(
@@ -70,7 +70,7 @@ public class SignBlockEntityMixin extends BlockEntity {
             cancellable = true
     )
     public void ponderingPlus_createUpdatePacket(CallbackInfoReturnable<Packet> cir) {
-        if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
+        //if (null != this.getBlock() && BlockListener.STORY_BOOKSHELF.id == this.getBlock().id) {
             String[] var1 = new String[ModHelper.STORY_BOOK_SIZE];
 
             for (int var2 = 0; var2 < ModHelper.STORY_BOOK_SIZE; ++var2) {
@@ -78,6 +78,6 @@ public class SignBlockEntityMixin extends BlockEntity {
             }
 
             cir.setReturnValue(new UpdateStoryPacket(this.x, this.y, this.z, var1));
-        }
+        //}
     }
 }

@@ -18,11 +18,6 @@ public class UpdateStoryPacket extends UpdateSignPacket implements ManagedPacket
 	private static final String STATION_ID = StationAPI.NAMESPACE.id("id").toString();
 	private static final Identifier ID = ModHelper.NAMESPACE.id("update_story");
 
-	public int x;
-	public int y;
-	public int z;
-	public String[] text;
-
 	public UpdateStoryPacket() {
 		this.worldPacket = true;
 	}
