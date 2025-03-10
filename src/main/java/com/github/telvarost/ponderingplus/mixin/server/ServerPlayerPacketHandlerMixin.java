@@ -1,6 +1,7 @@
 package com.github.telvarost.ponderingplus.mixin.server;
 
 import com.github.telvarost.ponderingplus.ModHelper;
+import com.github.telvarost.ponderingplus.blockentity.StoryBookshelfBlockEntity;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -39,10 +40,10 @@ public abstract class ServerPlayerPacketHandlerMixin extends NetworkHandler impl
             if (BlockListener.STORY_BOOKSHELF.id == serverWorld.getBlockId(packet.x, packet.y, packet.z)) {
 
                 BlockEntity var3 = serverWorld.getBlockEntity(packet.x, packet.y, packet.z);
-                if (var3 instanceof SignBlockEntity) {
-                    SignBlockEntity var4 = (SignBlockEntity)var3;
+                if (var3 instanceof StoryBookshelfBlockEntity) {
+                    StoryBookshelfBlockEntity storyBookshelfBlockEntity = (StoryBookshelfBlockEntity)var3;
                     // TODO: fix is editable property for bookshelf messages
-                    if (!var4.isEditable()) {
+                    if (!storyBookshelfBlockEntity.isEditable()) {
                         this.server.warn("Player " + this.player.name + " just tried to change non-editable sign");
                         return;
                     }

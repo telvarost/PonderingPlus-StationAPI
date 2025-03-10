@@ -1,11 +1,11 @@
 package com.github.telvarost.ponderingplus.mixin.client;
 
 import com.github.telvarost.ponderingplus.ModHelper;
+import com.github.telvarost.ponderingplus.blockentity.StoryBookshelfBlockEntity;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.ClientNetworkHandler;
 import net.minecraft.network.packet.play.UpdateSignPacket;
@@ -35,14 +35,14 @@ public class ClientNetworkHandlerMixin {
 
                 if (BlockListener.STORY_BOOKSHELF.id == this.minecraft.world.getBlockId(packet.x, packet.y, packet.z)) {
                     BlockEntity var2 = this.minecraft.world.getBlockEntity(packet.x, packet.y, packet.z);
-                    if (var2 instanceof SignBlockEntity) {
-                        SignBlockEntity var3 = (SignBlockEntity) var2;
+                    if (var2 instanceof StoryBookshelfBlockEntity) {
+                        StoryBookshelfBlockEntity storyBookshelfBlockEntity = (StoryBookshelfBlockEntity) var2;
 
                         for (int var4 = 0; var4 < ModHelper.STORY_BOOK_SIZE; ++var4) {
-                            var3.texts[var4] = packet.text[var4];
+                            storyBookshelfBlockEntity.texts[var4] = packet.text[var4];
                         }
 
-                        var3.markDirty();
+                        storyBookshelfBlockEntity.markDirty();
                     }
 
                     ci.cancel();

@@ -21,6 +21,7 @@
   "entrypoints": {
     "stationapi:event_bus": [
       "com.github.telvarost.ponderingplus.ModHelper",
+      "com.github.telvarost.ponderingplus.events.init.BlockEntityListener",
       "com.github.telvarost.ponderingplus.events.init.BlockListener",
       "com.github.telvarost.ponderingplus.events.init.EntityListener",
       "com.github.telvarost.ponderingplus.events.init.PacketListener"

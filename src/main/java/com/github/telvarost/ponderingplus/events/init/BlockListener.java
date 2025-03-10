@@ -2,6 +2,7 @@ package com.github.telvarost.ponderingplus.events.init;
 
 import com.github.telvarost.ponderingplus.ModHelper;
 import com.github.telvarost.ponderingplus.block.NotesBookshelf;
+import com.github.telvarost.ponderingplus.block.StoryBookshelf;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -20,7 +21,7 @@ public class BlockListener {
     public void registerBlocks(BlockRegistryEvent event) {
 
         NOTES_BOOKSHELF = new NotesBookshelf(Identifier.of(ModHelper.NAMESPACE, "notes_bookshelf"), Material.WOOD).setSoundGroup(WOOD_SOUND_GROUP).setHardness(2.0F).setTranslationKey(ModHelper.NAMESPACE, "notes_bookshelf");
-        STORY_BOOKSHELF = new NotesBookshelf(Identifier.of(ModHelper.NAMESPACE, "story_bookshelf"), Material.WOOD).setSoundGroup(WOOD_SOUND_GROUP).setHardness(3.0F).setTranslationKey(ModHelper.NAMESPACE, "story_bookshelf");
+        STORY_BOOKSHELF = new StoryBookshelf(Identifier.of(ModHelper.NAMESPACE, "story_bookshelf"), Material.WOOD).setSoundGroup(WOOD_SOUND_GROUP).setHardness(3.0F).setTranslationKey(ModHelper.NAMESPACE, "story_bookshelf");
 
         blocks = new Block[]
         {   NOTES_BOOKSHELF

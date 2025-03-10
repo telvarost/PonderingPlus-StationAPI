@@ -1,20 +1,26 @@
 package com.github.telvarost.ponderingplus.block;
 
-import net.minecraft.block.entity.SignBlockEntity;
+import com.github.telvarost.ponderingplus.blockentity.StoryBookshelfBlockEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.modificationstation.stationapi.api.template.block.TemplateSignBlock;
+import net.modificationstation.stationapi.api.template.block.TemplateBlockWithEntity;
 import net.modificationstation.stationapi.api.util.Identifier;
 
 import java.util.Random;
 
-public class StoryBookshelf extends TemplateSignBlock {
+public class StoryBookshelf extends TemplateBlockWithEntity {
 
     public StoryBookshelf(Identifier identifier, Material material) {
-        super(identifier, SignBlockEntity.class, true);
+        super(identifier, material);
         this.setBoundingBox(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    @Override
+    protected BlockEntity createBlockEntity() {
+        return new StoryBookshelfBlockEntity();
     }
 
     @Override
@@ -34,9 +40,9 @@ public class StoryBookshelf extends TemplateSignBlock {
     @Override
     public boolean onUse(World world, int x, int y, int z, PlayerEntity entity) {
         /** - Open sign screen */
-        SignBlockEntity signBlockEntity = (SignBlockEntity)world.getBlockEntity(x, y, z);
-        if (signBlockEntity != null) {
-            entity.openEditSignScreen(signBlockEntity);
+        StoryBookshelfBlockEntity storyBookshelfBlockEntity = (StoryBookshelfBlockEntity)world.getBlockEntity(x, y, z);
+        if (storyBookshelfBlockEntity != null) {
+            entity.openEditSignScreen(storyBookshelfBlockEntity.convertToSignBlockEntity());
         }
         return true;
     }
