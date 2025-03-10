@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ponderingplus:block/story_bookshelf_model"
+    }
+  }
+}

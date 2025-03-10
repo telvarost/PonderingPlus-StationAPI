@@ -1,6 +1,7 @@
 package com.github.telvarost.ponderingplus.mixin;
 
 import com.github.telvarost.ponderingplus.Config;
+import com.github.telvarost.ponderingplus.blockentity.StoryBookshelfBlockEntity;
 import com.github.telvarost.ponderingplus.entity.BookEntity;
 import com.github.telvarost.ponderingplus.entity.SeatEntity;
 import com.github.telvarost.ponderingplus.events.init.BlockListener;
@@ -24,7 +25,7 @@ public class ItemMixin {
     @Shadow public static Item BOOK;
 
     @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-    public void miscTweaks_useOnTile(ItemStack itemStack, PlayerEntity player, World world, int x, int y, int z, int meta, CallbackInfoReturnable<Boolean> cir) {
+    public void ponderingPlus_useOnTile(ItemStack itemStack, PlayerEntity player, World world, int x, int y, int z, int meta, CallbackInfoReturnable<Boolean> cir) {
 
         if (BOOK.id == itemStack.itemId) {
             if (Config.config.useBookAsSeat) {
@@ -99,6 +100,26 @@ public class ItemMixin {
                         player.openEditSignScreen(signBlockEntity);
                     }
 
+                    cir.setReturnValue(true);
+                }
+            }
+        } else if (Item.PAPER.id == itemStack.itemId) {
+            if (Block.BOOKSHELF.id == world.getBlockId(x, y, z)) {
+                if (player.inventory.remove(Item.DYE.id)) {
+                    world.playSound(player, "step.wood", 1.0F, 1.0F / (world.random.nextFloat() * 0.4F + 0.8F));
+                    world.setBlock(x, y, z, BlockListener.STORY_BOOKSHELF.id);
+
+                    /** - Open sign screen */
+                    StoryBookshelfBlockEntity storyBookshelfBlockEntity = (StoryBookshelfBlockEntity)world.getBlockEntity(x, y, z);
+                    if (storyBookshelfBlockEntity != null) {
+                        player.openEditSignScreen(storyBookshelfBlockEntity.convertToSignBlockEntity());
+                    } else {
+                        storyBookshelfBlockEntity = new StoryBookshelfBlockEntity();
+                        world.setBlockEntity(x, y, z, storyBookshelfBlockEntity);
+                        player.openEditSignScreen(storyBookshelfBlockEntity.convertToSignBlockEntity());
+                    }
+
+                    itemStack.count--;
                     cir.setReturnValue(true);
                 }
             }
