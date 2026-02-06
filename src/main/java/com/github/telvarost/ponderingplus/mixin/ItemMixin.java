@@ -39,14 +39,14 @@ public class ItemMixin {
 //                    }
 //                    cir.setReturnValue(true);
                 } else {
-                    if (!world.isRemote) {
+                    if (!world.isRemote && player.onGround) {
                         BookEntity entity = new BookEntity(world);
                         float bookYaw = (player.yaw - 90.0F);
                         bookYaw = (0.0F > bookYaw) ? (bookYaw + 360.0F) : bookYaw;
-                        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
-                            entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
+                        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                            entity.setPositionAndAngles(player.x, player.y - 1.0, player.z, bookYaw, 0.0F);
                         } else {
-                            entity.setPositionAndAngles(player.x, player.y - 1.6, player.z, bookYaw, 0.0F);
+                            entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
                         }
                         world.spawnEntity(entity);
                         player.setVehicle(entity);
@@ -67,14 +67,14 @@ public class ItemMixin {
 //                    }
 //                    cir.setReturnValue(true);
                 } else {
-                    if (!world.isRemote) {
+                    if (!world.isRemote && player.onGround) {
                         SeatEntity entity = new SeatEntity(world);
                         float bookYaw = (player.yaw - 90.0F);
                         bookYaw = (0.0F > bookYaw) ? (bookYaw + 360.0F) : bookYaw;
-                        if (FabricLoader.getInstance().getEnvironmentType() != EnvType.CLIENT) {
-                            entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
+                        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                            entity.setPositionAndAngles(player.x, player.y - 1.0, player.z, bookYaw, 0.0F);
                         } else {
-                            entity.setPositionAndAngles(player.x, player.y - 1.6, player.z, bookYaw, 0.0F);
+                            entity.setPositionAndAngles(player.x, player.y, player.z, bookYaw, 0.0F);
                         }
                         world.spawnEntity(entity);
                         player.setVehicle(entity);

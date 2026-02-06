@@ -24,7 +24,7 @@ public class BookEntity extends Entity implements EntitySpawnDataProvider {
     public BookEntity(World world) {
         super(world);
         this.setBoundingBoxSpacing(0.6F, 0.6F);
-        this.standingEyeHeight = 0.01F;
+        this.standingEyeHeight = 0.0F;
     }
 
     public BookEntity(World world, Double x, Double y, Double z) {
@@ -61,9 +61,16 @@ public class BookEntity extends Entity implements EntitySpawnDataProvider {
 
     @Override
     public void updatePassengerPosition() {
-        if (this.passenger != null) {
+        if (null != this.passenger) {
             this.passenger.setPosition(this.x, this.y + this.getPassengerRidingHeight() + this.passenger.getStandingEyeHeight(), this.z);
         }
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void setPositionAndAnglesAvoidEntities(double x, double y, double z, float pitch, float yaw, int interpolationSteps) {
+        this.setPosition(x, y, z);
+        this.setRotation(pitch, yaw);
     }
 
     @Override
@@ -136,9 +143,6 @@ public class BookEntity extends Entity implements EntitySpawnDataProvider {
                 this.dropItem(Item.BOOK.id, 1, 0.0F);
                 world.remove(this);
             } else if (this.passenger.isSneaking()) {
-                if (this.onGround) {
-                    this.setPosition(this.x, this.y + 1.0, this.z);
-                }
                 this.dropItem(Item.BOOK.id, 1, 0.0F);
                 this.passenger.setVehicle(null);
                 world.remove(this);

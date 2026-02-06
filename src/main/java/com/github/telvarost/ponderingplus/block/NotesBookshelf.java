@@ -28,7 +28,7 @@ public class NotesBookshelf extends TemplateSignBlock {
 
     @Override
     public int getDroppedItemId(int blockMeta, Random random) {
-        return this.BOOKSHELF.id;
+        return this.BOOKSHELF.asItem().id;
     }
 
     @Override
